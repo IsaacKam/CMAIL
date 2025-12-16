@@ -94,7 +94,7 @@ export const portfolioEmails: Email[] = [
   {
     id: '4',
     sender: 'Freelance Clients',
-    senderEmail: 'projects@example.com',
+    senderEmail: 'projects@camilaspokojny.com',
     subject: 'Marketing & Creative Strategy Portfolio 🎨',
     snippet: 'Worked with a range of DTC companies across health, fashion and beauty during university...',
     body: `<div class="email-body">
@@ -178,7 +178,7 @@ export const portfolioEmails: Email[] = [
   {
     id: '7',
     sender: 'Skills & Tools',
-    senderEmail: 'skills@example.com',
+    senderEmail: 'skills@camilaspokojny.com',
     subject: 'Technical Skills & Software Proficiency 💻',
     snippet: 'AI & GenAI, Creative Software, Marketing & Ads, Analytics & Insights...',
     body: `<div class="email-body">
@@ -213,7 +213,7 @@ export const portfolioEmails: Email[] = [
   {
     id: '8',
     sender: 'Languages & Activities',
-    senderEmail: 'about@example.com',
+    senderEmail: 'about@camilaspokojny.com',
     subject: 'Languages & Extra-Curricular Activities 🌍',
     snippet: 'English (Fluent), Spanish (Native), French (Basic)...',
     body: `<div class="email-body">
@@ -241,12 +241,12 @@ export const portfolioEmails: Email[] = [
   {
     id: '9',
     sender: 'Contact Me',
-    senderEmail: 'contact@example.com',
+    senderEmail: 'camilaspokojny1@gmail.com',
     subject: "Let's Connect! 📬",
     snippet: 'Ready to collaborate? Get in touch via email...',
     body: `<div class="email-body">
       <h3>📧 Email:</h3>
-      <p><a href="mailto:contact@example.com">contact@example.com</a></p>
+      <p><a href="mailto:camilaspokojny1@gmail.com">camilaspokojny1@gmail.com</a></p>
       
       <h3>💼 Open to:</h3>
       <ul>
