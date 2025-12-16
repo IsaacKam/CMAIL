@@ -95,7 +95,7 @@ export default function Home() {
           ) : (
             <EmailList 
               emails={filteredEmails}
-              selectedEmailId={selectedEmail?.id || null}
+              selectedEmailId={null}
               onEmailSelect={handleEmailSelect}
               activeCategory={activeCategory}
               onCategoryChange={setActiveCategory}
