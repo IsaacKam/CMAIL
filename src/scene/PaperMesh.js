@@ -69,6 +69,10 @@ export class PaperMesh {
 
     this.mesh = new THREE.InstancedMesh(geometry, material, count);
     this.mesh.frustumCulled = false;
+    // Set a huge bounding sphere on the geometry so the raycaster's
+    // preliminary check never rejects. Without this, only cards near
+    // origin are clickable because the default 1x1 plane bounding sphere is tiny.
+    geometry.boundingSphere = new THREE.Sphere(new THREE.Vector3(0, 0, 0), 1000);
 
     const uvRegions = new Float32Array(count * 4);
     const hovers = new Float32Array(count);
