@@ -17,7 +17,8 @@ async function init() {
   const canvas = document.getElementById('canvas');
   const sceneManager = new SceneManager(canvas);
 
-  const response = await fetch('/assets/manifest.json');
+  const base = import.meta.env.BASE_URL;
+  const response = await fetch(`${base}assets/manifest.json`);
   const manifest = await response.json();
   const count = manifest.length;
 

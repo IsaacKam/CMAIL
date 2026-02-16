@@ -9,9 +9,10 @@ export class TextureManager {
   }
 
   async loadAtlas() {
+    const base = import.meta.env.BASE_URL;
     const [texture, map] = await Promise.all([
-      this._loadTexture('/assets/atlas.webp'),
-      this._loadMap('/assets/atlas-map.json')
+      this._loadTexture(`${base}assets/atlas.webp`),
+      this._loadMap(`${base}assets/atlas-map.json`)
     ]);
 
     this.atlasTexture = texture;

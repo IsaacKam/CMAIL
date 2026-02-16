@@ -24,9 +24,10 @@ export class DetailView {
     this.currentAssetId = instanceId;
     this.content.innerHTML = '';
 
+    const base = import.meta.env.BASE_URL;
     if (asset.type === 'video') {
       const video = document.createElement('video');
-      video.src = `/assets/video/${asset.id}.mp4`;
+      video.src = `${base}assets/video/${asset.id}.mp4`;
       video.controls = true;
       video.autoplay = true;
       video.playsInline = true;
@@ -35,7 +36,7 @@ export class DetailView {
       this.videoElement = video;
     } else {
       const img = document.createElement('img');
-      img.src = `/assets/full/${asset.id}.webp`;
+      img.src = `${base}assets/full/${asset.id}.webp`;
       img.alt = asset.filename;
       img.className = 'detail-media';
       this.content.appendChild(img);
