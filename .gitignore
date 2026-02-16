@@ -1,0 +1,7 @@
+node_modules/
+dist/
+public/assets/raw/
+public/assets/thumb/
+public/assets/mid/
+.DS_Store
+*.zip

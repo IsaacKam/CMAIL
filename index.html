@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Camila Spokojny</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      overflow: hidden;
+      background: #000;
+      font-family: 'Roboto Mono', monospace;
+      font-weight: 400;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    #canvas {
+      display: block;
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+
+    /* Loading Screen */
+    #loading-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      transition: opacity 0.6s ease;
+    }
+
+    #loading-text {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    #loading-progress {
+      margin-top: 12px;
+      width: 120px;
+      height: 1px;
+      background: rgba(255, 255, 255, 0.1);
+      overflow: hidden;
+    }
+
+    #loading-progress-bar {
+      height: 100%;
+      width: 0%;
+      background: rgba(255, 255, 255, 0.5);
+      transition: width 0.2s ease;
+    }
+
+    /* Branding - top left */
+    #branding {
+      position: fixed;
+      top: 20px;
+      left: 24px;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    /* Clock - top right */
+    #clock {
+      position: fixed;
+      top: 20px;
+      right: 24px;
+      z-index: 10;
+      pointer-events: none;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Toggle Button */
+    #toggle-btn {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 20px;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.5);
+      font-family: 'Roboto Mono', monospace;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    #toggle-btn:hover {
+      border-color: rgba(255, 255, 255, 0.4);
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    /* Detail Overlay */
+    #detail-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+
+    #detail-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #detail-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      max-width: 90vw;
+      max-height: 85vh;
+    }
+
+    .detail-media {
+      max-width: 90vw;
+      max-height: 85vh;
+      object-fit: contain;
+    }
+
+    #detail-project {
+      margin-top: 12px;
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    #detail-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: rgba(255, 255, 255, 0.5);
+      font-family: 'Roboto Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      cursor: pointer;
+      transition: border-color 0.2s ease, color 0.2s ease;
+    }
+
+    #detail-close:hover {
+      border-color: rgba(255, 255, 255, 0.4);
+      color: rgba(255, 255, 255, 0.8);
+    }
+  </style>
+</head>
+<body>
+  <canvas id="canvas"></canvas>
+
+  <div id="loading-screen">
+    <div id="loading-text">Loading...</div>
+    <div id="loading-progress"><div id="loading-progress-bar"></div></div>
+  </div>
+
+  <div id="branding">Camila Spokojny</div>
+  <div id="clock"></div>
+
+  <button id="toggle-btn">[ Grid ]</button>
+
+  <div id="detail-overlay">
+    <button id="detail-close">[ Close ]</button>
+    <div id="detail-content"></div>
+    <div id="detail-project"></div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
