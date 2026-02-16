@@ -7,3 +7,4 @@ public/assets/mid/
 *.zip
 *.pem
 .env*
+package-lock.json
