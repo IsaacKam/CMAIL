@@ -2,5 +2,5 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
   publicDir: 'public',
-  base: '/CMAIL/',
+  base: process.env.VERCEL ? '/' : '/CMAIL/',
 });
