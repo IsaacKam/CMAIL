@@ -24,8 +24,11 @@ export class RaycasterManager {
   }
 
   onClickEvent(event) {
-    if (!this.enabled || this.hoveredId === -1) return;
-    if (this.onClick) this.onClick(this.hoveredId);
+    if (!this.enabled) return;
+    this.mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    this.mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
+    this.performRaycast();
+    if (this.hoveredId !== -1 && this.onClick) this.onClick(this.hoveredId);
   }
 
   onTouchEnd(event) {
