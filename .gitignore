@@ -5,3 +5,5 @@ public/assets/thumb/
 public/assets/mid/
 .DS_Store
 *.zip
+*.pem
+.env*
