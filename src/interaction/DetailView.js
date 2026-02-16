@@ -27,13 +27,20 @@ export class DetailView {
     const base = import.meta.env.BASE_URL;
     if (asset.type === 'video') {
       const video = document.createElement('video');
-      video.src = `${base}assets/video/${asset.id}.mp4`;
       video.controls = true;
-      video.autoplay = true;
       video.playsInline = true;
+      video.setAttribute('webkit-playsinline', '');
+      video.muted = true;
+      video.preload = 'auto';
       video.className = 'detail-media';
       this.content.appendChild(video);
       this.videoElement = video;
+      video.src = `${base}assets/video/${asset.id}.mp4`;
+      video.load();
+      video.play().then(() => {
+        // Unmute after autoplay starts (user-initiated tap allows this)
+        video.muted = false;
+      }).catch(() => {});
     } else {
       const img = document.createElement('img');
       img.src = `${base}assets/full/${asset.id}.webp`;
