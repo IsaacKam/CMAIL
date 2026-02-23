@@ -228,8 +228,15 @@
       font-family: 'Roboto Mono', monospace;
       font-size: 11px;
       cursor: pointer;
-      transition: color 0.2s ease;
+      transition: color 0.2s ease, opacity 0.25s ease;
       padding: 4px;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #filter-sidebar.open #filter-close {
+      opacity: 1;
+      pointer-events: auto;
     }
 
     #filter-close:hover {
