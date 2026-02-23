@@ -9,10 +9,15 @@ export class LayoutAnimator {
     this.mode = 'sphere'; // 'sphere' | 'grid'
     this.animating = false;
     this.progress = 0; // 0 = sphere, 1 = grid
-    this.duration = 1.8;
+    this.defaultDuration = 1.8;
+    this.duration = this.defaultDuration;
     this.elapsed = 0;
     this.direction = 1; // 1 = to grid, -1 = to sphere
     this.onComplete = null;
+
+    // For filter animations: lerp from snapshot to target
+    this._snapshotPositions = null;
+    this._snapshotQuaternions = null;
 
     // Current interpolated transforms
     this.count = paperMesh.count;
@@ -31,8 +36,11 @@ export class LayoutAnimator {
 
   toggle() {
     if (this.animating) return;
+    this._snapshotPositions = null;
+    this._snapshotQuaternions = null;
     this.animating = true;
     this.elapsed = 0;
+    this.duration = this.defaultDuration;
     if (this.mode === 'sphere') {
       this.direction = 1;
       this.mode = 'grid';
@@ -44,19 +52,23 @@ export class LayoutAnimator {
   }
 
   applyLayout(t) {
-    // t: 0 = sphere, 1 = grid
+    const fromPositions = this._snapshotPositions || this.sphereLayout.positions;
+    const fromQuaternions = this._snapshotQuaternions || this.sphereLayout.quaternions;
+    const toPositions = this._snapshotPositions ? this._targetPositions() : this.gridLayout.positions;
+    const toQuaternions = this._snapshotQuaternions ? this._targetQuaternions() : this.gridLayout.quaternions;
+
     for (let i = 0; i < this.count; i++) {
-      this.currentPositions[i].lerpVectors(
-        this.sphereLayout.positions[i],
-        this.gridLayout.positions[i],
-        t
-      );
-      this.currentQuaternions[i].slerpQuaternions(
-        this.sphereLayout.quaternions[i],
-        this.gridLayout.quaternions[i],
-        t
-      );
+      this.currentPositions[i].lerpVectors(fromPositions[i], toPositions[i], t);
+      this.currentQuaternions[i].slerpQuaternions(fromQuaternions[i], toQuaternions[i], t);
     }
+  }
+
+  _targetPositions() {
+    return this.mode === 'grid' ? this.gridLayout.positions : this.sphereLayout.positions;
+  }
+
+  _targetQuaternions() {
+    return this.mode === 'grid' ? this.gridLayout.quaternions : this.sphereLayout.quaternions;
   }
 
   update(deltaTime) {
@@ -72,7 +84,10 @@ export class LayoutAnimator {
 
     const easedT = easeInOutCubic(rawT);
 
-    if (this.direction === 1) {
+    if (this._snapshotPositions) {
+      // Filter animation: lerp from snapshot to target
+      this.progress = easedT;
+    } else if (this.direction === 1) {
       this.progress = easedT;
     } else {
       this.progress = 1 - easedT;
@@ -81,17 +96,26 @@ export class LayoutAnimator {
     this.applyLayout(this.progress);
     this.paperMesh.updateTransforms(this.currentPositions, this.currentQuaternions);
 
-    if (!this.animating && this.onComplete) {
-      this.onComplete(this.mode);
+    if (!this.animating) {
+      this._snapshotPositions = null;
+      this._snapshotQuaternions = null;
+      this.duration = this.defaultDuration;
+      if (this.onComplete) this.onComplete(this.mode);
     }
   }
 
-  // For when grid layout changes due to filtering
-  updateGridLayout(gridLayout) {
+  // For when layouts change due to filtering
+  updateLayouts(sphereLayout, gridLayout) {
+    // Snapshot current positions
+    this._snapshotPositions = this.currentPositions.map(p => p.clone());
+    this._snapshotQuaternions = this.currentQuaternions.map(q => q.clone());
+
+    this.sphereLayout = sphereLayout;
     this.gridLayout = gridLayout;
-    if (this.mode === 'grid' && !this.animating) {
-      this.applyLayout(1);
-      this.paperMesh.updateTransforms(this.currentPositions, this.currentQuaternions);
-    }
+
+    this.animating = true;
+    this.elapsed = 0;
+    this.duration = 0.8;
+    this.progress = 0;
   }
 }

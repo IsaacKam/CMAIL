@@ -9,6 +9,7 @@ import { RaycasterManager } from './interaction/RaycasterManager.js';
 import { DetailView } from './interaction/DetailView.js';
 import { ToggleButton } from './ui/ToggleButton.js';
 import { LoadingScreen } from './ui/LoadingScreen.js';
+import { ProjectFilter } from './ui/ProjectFilter.js';
 
 async function init() {
   const loadingScreen = new LoadingScreen();
@@ -54,6 +55,19 @@ async function init() {
       toggleButton.setMode('sphere');
       cameraController.setSphereMode();
     }
+  };
+
+  // Filter sidebar
+  const projectFilter = new ProjectFilter(manifest);
+  projectFilter.onChange = () => {
+    const visibleIndices = projectFilter.getVisibleIndices();
+
+    // Recalculate both layouts with filtered indices
+    sphereLayout.calculate(count, visibleIndices);
+    gridLayout.calculate(count, visibleIndices);
+
+    // Animate to new layout
+    layoutAnimator.updateLayouts(sphereLayout, gridLayout);
   };
 
   loadingScreen.hide();

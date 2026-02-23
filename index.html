@@ -70,7 +70,7 @@
     #branding {
       position: fixed;
       top: 20px;
-      left: 24px;
+      left: 52px;
       z-index: 10;
       pointer-events: none;
     }
@@ -84,6 +84,156 @@
       pointer-events: none;
       text-align: right;
       font-variant-numeric: tabular-nums;
+    }
+
+    /* Filter Sidebar */
+    #filter-sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 20;
+      width: 44px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+
+    #filter-sidebar.open {
+      width: 200px;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-right: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    #filter-toggle {
+      position: absolute;
+      top: 50%;
+      left: 12px;
+      transform: translateY(-50%);
+      background: transparent;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      color: rgba(255, 255, 255, 0.4);
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 9px;
+      transition: border-color 0.2s ease, color 0.2s ease, opacity 0.3s ease;
+    }
+
+    #filter-toggle:hover {
+      border-color: rgba(255, 255, 255, 0.35);
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    #filter-sidebar.open #filter-toggle {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    #filter-content {
+      padding: 0 20px;
+      opacity: 0;
+      transform: translateX(-8px);
+      transition: opacity 0.25s ease 0.1s, transform 0.25s ease 0.1s;
+      pointer-events: none;
+    }
+
+    #filter-sidebar.open #filter-content {
+      opacity: 1;
+      transform: translateX(0);
+      pointer-events: auto;
+    }
+
+    .filter-section {
+      margin-bottom: 24px;
+    }
+
+    .filter-label {
+      color: rgba(255, 255, 255, 0.25);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      margin-bottom: 10px;
+    }
+
+    .filter-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 0;
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.35);
+      font-family: 'Roboto Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 0.2s ease;
+      width: 100%;
+      text-align: left;
+    }
+
+    .filter-item:hover {
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    .filter-item.active {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    .filter-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      flex-shrink: 0;
+      transition: background 0.2s ease;
+    }
+
+    .filter-item.active .filter-dot {
+      background: rgba(255, 255, 255, 0.85);
+    }
+
+    .filter-count {
+      margin-left: auto;
+      color: rgba(255, 255, 255, 0.15);
+      font-size: 9px;
+    }
+
+    .filter-item.active .filter-count {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .filter-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.06);
+      margin-bottom: 24px;
+    }
+
+    #filter-close {
+      position: absolute;
+      top: 16px;
+      right: 14px;
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.3);
+      font-family: 'Roboto Mono', monospace;
+      font-size: 11px;
+      cursor: pointer;
+      transition: color 0.2s ease;
+      padding: 4px;
+    }
+
+    #filter-close:hover {
+      color: rgba(255, 255, 255, 0.7);
     }
 
     /* Toggle Button */
@@ -187,6 +337,12 @@
 
   <div id="branding">Camila Spokojny</div>
   <div id="clock"></div>
+
+  <div id="filter-sidebar">
+    <button id="filter-toggle">&#9776;</button>
+    <button id="filter-close">&times;</button>
+    <div id="filter-content"></div>
+  </div>
 
   <button id="toggle-btn">[ Grid ]</button>
 
